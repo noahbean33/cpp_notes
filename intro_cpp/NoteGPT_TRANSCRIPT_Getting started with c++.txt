@@ -1,0 +1,66 @@
+00:00:00
+so welcome uh to the first of my videos on scientific computing in c plus plus some of these videos will be strictly learning c plus uh some of them will be coding examples or learning important libraries like eigen and others might be focused on understanding topics in numerical analysis or algorithms today we are going to get our first program to run and explore a few important variable types note that this isn't a series to get you into c plus plus for general purpose programming here we
+
+00:00:40
+will focus on numerical computing so i will cover topics as needed for the series so i'm going to run this series by using code blocks if you want to follow along while using code blocks simply go to codeblocks.org you're going to want to go to downloads then follow the download the binary release link here from here pick your operating system for me that's windows so going here so here you're going to download the executable uh code blocks dash 20.03 or whichever numbers uh end
+
+00:01:22
+up being relevant for when you look at this video followed by the mingw setup.exe version of the download this version of the download includes the gcc compiler so that's going to make our life a lot easier so once this is installed you can go to create a new project you're going to want to click console application for what we're going to do make sure it's set on c plus and give it a project title so i'm going to call this example uh 1 to keep the naming consistent throughout
+
+00:02:00
+the series and then we're going to want to make sure that the write compiler is selected so we want the gnu gcc compiler so here on the left-hand side you're going to see sources so expanding this list we can go to main.cpp and this is our first instance of our code so next for future purposes are going to enable a few compiler settings so go to settings and then to compiler we are going to want to enable uh whichever is the most recent c plus standard that comes with your download for me
+
+00:02:38
+that's c plus plus 11 and then going further down this will be more useful for future videos when we're dealing with libraries we're going to want to include uh optimization so we're just gonna set this to optimize fully for speed uh dash zero three just click this box here um and then click ok okay so here we are we have our first program with a hello world uh ready to go for us so let's quickly change this to hello youtube okay and then we can save that and just to give you
+
+00:03:19
+a look we can then go here to build it or to compile it tells us zero error errors down here and then up here we can do run and then out pops hello youtube to a console so now let's break down what's actually going on here in the code the first line we see here is a hashtag include iostream for all intents and purposes this is a lot like python when you're importing something like numpy so what's going on here is that the line with the hashtag symbol is a directive to something called the
+
+00:03:58
+preprocessor that tells it to include in our case a section of the standard c plus code which is called a header so that is what iostream is it's a header which gives you the ability to perform input and output operations so this includes for example this c out which allows us to print things to the console next we have uh using namespace std here this will allow us to use things from the c plus plus standard without putting std and then two colons in front of the things we want to use from the standard library so for
+
+00:04:40
+example c out comes from the standard library so without using namespace std we would have to write the uh this statement for c plus in the following way but uh to make our lives a little bit easier we're going to use uh namespace std here and so we don't need this so this can be bad programming practice if you're using a lot of different libraries with potential identical names for different functions but for us this will be fine for now next you'll note int main this line is a special declaration in c
+
+00:05:20
+plus plus we will get to functions in more detail later but when we run our code our program begins by locating the main function and then executes the code within the main function so this function controls your code you'll note that after main we have curly braces and all the way at the bottom here we have another curly brace this tells us the beginning and end of the main function next we have our c out followed by a less than uh less than uh sign which is called the insertion operator and then hello youtube uh inside
+
+00:06:03
+quotation marks and then also another insertion operator and then end l followed by a semicolon so there's definitely a lot to unpack here c out stands for character output and that's our usual way of printing something to the screen or to the console as our program runs the insertion operator tells c plus that what follows should be printed we wrote inside quotations hello youtube which is what we wanted to output finally afterwards we have this end l which stands for end line it's mostly
+
+00:06:41
+just to keep the output uh looking clean so notice that our command or our statement here ended in a semicolon every c plus plus statement ends in a semicolon if we wanted to say for example add a comment we would just add two forward slashes here to get a comment line and then we could just add whatever text we wanted to uh let ourselves know in the future or let someone else know in the future when they're reading our code so last but not least we have return zero uh you don't need to
+
+00:07:16
+worry too much about that the program wouldn't change if we just deleted it but basically what's going to happen here is that if our program executes correctly or as intended it will output return zero at the end of the execution letting us know that everything went okay okay so now we have a basic setup here let's introduce how to do a bit of math to do that we first need to introduce some data types that will be useful for us the most common numerical data types you will look at initially will be integers
+
+00:07:52
+and real numbers to declare an integer you simply write int space then you would give it a name i'll call mine a then you could you could finish this statement by adding a semicolon and then you could assign it a value later or we could give it for example the value of one we could go ahead and declare a few more here so let's do int b is equal to two and end c is equal to five from here we can start doing maybe a little bit of math we could reassign c to the value of two times a plus b
+
+00:08:39
+and so printing that we could see the result of what happened here so we're just going to print the variable c and then end the line again so building this again zero error zero warnings running we get our hello youtube uh from line seven and then from line 15 we see that we printed the screen the result of uh our mathematics so nc was initially declared to be five and now once we redeclare it to be two times a plus b it's obviously four so we can do all of the usual operations here so for example
+
+00:09:18
+we could do c is equal to a divided by b or c is equal to c minus b so all of the operations work as you might expect but we need to be careful with division specifically for integers so when we write an integer divided by an integer what we're doing here is integer division so for example what would the output be if we do a divided by b here so compiling and running what we see is that it outputs 0 but a is 1 and b is 2 so you might expect that it would be 0.5 integer division divides the numbers and
+
+00:10:04
+then converts the result back into an integer if the number has a non-integer portion for in our case that would be 0.5 so the 0.5 it simply throws the non-integer portion away then the resulting integer portion which is us 0 is what the code gives us back so this unsurprisingly uh ends up inserting some strange bugs into into your code if you aren't careful sometimes a bunch of my results will come out and they'll all be zero so as soon as i see that the first thing i check is if i messed up and did
+
+00:10:43
+integer division somewhere i shouldn't have the easiest way to fix this would be to for example insert a 1.0 somewhere so if i first did 1.0 times a here then the top portion 1.0 is not an integer it's a real number then the top portion is a real number which is called a double in this case times a so the result here will not be an integer it will actually be a double and from there our double will then be divided by an integer which again c plus plus will give back a real number or a double
+
+00:11:26
+instead of an integer so doing this again compiling we will run and instead of zero now our simple fix give us gives us back 0.5 so this is a standard rule if you do an operation uh with a double and an integer together the result will be a double okay so i've been saying double a lot what is a double well we can uh we can declare a double so let's declare two and then we can talk about it so here i only put one decimal place in these declarations but the double should have about 15 decimal places of
+
+00:12:13
+precision and this is plenty for our calculations so again we can do all of the usual operations with these doubles so let's just write out a random sequence here e times d plus uh e divided by d subtracted by um subtracted by d let's say and and this would just give us a number back so here that ends up being something around 1.5191 uh the console print here um actually just cut off some digits that's not all of the digits the program would actually have access to if we wanted more digits
+
+00:13:01
+we could write for example c out dot precision and then set that to for example 12 here and then instead the program when printing uh to the console will give us more digits for precision so definitely go ahead and play around with these operations if you have the chance and the time you can also change between data types so for example here we could do c out and then wrap around this interior with the variable d which is a double and what this is going to do is it's going to change our output
+
+00:13:46
+to an integer doing that what we see here is that d which was declared to be 6.7 converting it to an integer it just removed the non-integer portion so the 0.7 here and then it just printed out six okay so i'm going to stop here for now to be honest this script feels a bit long and i don't have a feel for how many pages translates to how many minutes the video will be so let's stop here so next video uh the plan will be to look a bit more at operations uh input and output and of course loops so that's it for today
+
+00:14:27
+everyone i hope you liked the video if you did feel free to like subscribe and leave a comment below
+

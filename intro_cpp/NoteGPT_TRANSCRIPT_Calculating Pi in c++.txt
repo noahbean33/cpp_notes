@@ -1,0 +1,45 @@
+00:00:00
+in this video our challenge is to calculate pi in c plus plus using what we've learned so far to calculate pi we will use the following series attributed to euler so we have pi over 2 is equal to 1 plus a third plus a third times two-fifths and so on so let's think about how this should be approached before we start coding firstly it's an infinite sum so we should do a loop that either calculates a certain number of terms in the series or we can cut off the for loop when the new term added to
+
+00:00:35
+our estimation of pi over 2 is too small so let's figure out how to do the loop structure let's calculate the sum on the right-hand side if we use a for loop starting at index 0 we see that the first step the term being added is 1. if we then look at index 1 so the second step we see that the term being added is actually one times one-third so that's the previous term times one-third you can convince yourself straightforwardly this is always the case the next term is the previous term
+
+00:01:10
+uh times something new so what's that new thing well let us denote the term in the sum for step m as s subscript m and we can see that the new term to be added to our estimate of pi over 2 is s m is equal to s m minus 1 times m divided by 2m plus 1. okay so now that we have an idea of how to structure our program to calculate our series that estimates pi over two let's actually jump in and write the code so as we mentioned previously one way to stop the loop or to stop the series is just do is just to
+
+00:01:50
+define the maximum number of terms that we might add into the series so let's start this off as an int and we'll set it as equal to 10. another way to stop it would be to have some threshold for how big the term we're adding to the sum is and then to stop the sum when terms get too small so we'll call this so this will be a double of course it'll be a decimal number and we'll call this small and for now we'll set it to 1e to the negative 5. so what that stands for is
+
+00:02:22
+scientific notation it's 10 to the negative 5. then we will need our term that will be added to the sum and we'll call this sm is equal to 1 because that's where it's going to start and i'm not going to start the sum at zero i'm actually going to take the m is equal to zero index as we discussed and i'm already going to add it to the sum so we're going to call double sum and we're going to initialize it as one so next we're going to do our loop so for into m is equal to 1 so we're not going
+
+00:02:54
+to do m is equal to 0 again that's already in the sum m will be less than the max number of terms in the sum and we're going to increment m by one so m plus plus as we discussed uh the next term in the sum so we've already done uh m is equal to zero now we have to do m is equal to one the next term in the sum is equal to itself times m the current our current index in the series divided by 2.0 times m plus one here right so as we discussed in the previous video this same line of code can be
+
+00:03:35
+accomplished by instead writing it in the following way and we're going to stick to that it's just cleaner it looks better so those two lines of code do the exact same thing but we're just going to stick it here like this then we're going to add this to the sum and it'll be plus equals sm now that is basically the whole algorithm but we can we can make this better so first first let's tell c out that we want 12 digits of precision to be outputted and then let's let's print our result so
+
+00:04:16
+we want pi so 2 times the sum is pi and and let's see how far we get with max terms is equal to 10 how close are we to pi so printing that out we get 3.14 uh but then we're not we're not quite accurate so maybe let's let's ramp this up a little bit so this this took like no time at all let's ramp it up a little bit and let's say we're going to add in 100 terms just to just to make sure that we can get reasonable accuracy quite quickly and running this new one we get 3.141592
+
+00:04:55
+and so on so this is much more accurate it's much better but perhaps we're actually doing uh too much work uh to get the type of precision and accuracy that we might want so this is where our friend uh double small comes in so the double that's called small who's one e to the negative five so let's say we only want like around the first five decimal places of pi for some reason so what we can do then is we can ask if sm the thing that we just added to the sum uh is less than small
+
+00:05:32
+and what this will tell us is is the terms that we're adding are smaller than the precision that we put in and it's time to stop the loop so perhaps we can write c out and we can tell the person running our code how many iterations went through so how many how many steps in the series or how many things did you have to add to the series such that you got this precision uh or this you got to the point where you triggered this if statement so we can write number of iterations and we can output
+
+00:06:09
+we can put output m because that's how many terms we put into the sum and we can end there and after that what we will do is we will do break because we've already calculated pi to the precision that we want to we can then break out of the loop and skip all of the extra work now this might seem a little silly max terms here being a hundred it still takes you know less than a second to to run but this type of thinking can be very useful once your algorithms start to get much more complex so it's important to
+
+00:06:45
+exercise them now and get used to them now when you are in a position uh where your algorithms are are much simpler so doing that perhaps we can then structure uh this a little bit so the output is also nice and we can say [Music] estimate of pi so right now we want it to the precision of one e to the negative five which isn't so great so running it no errors um so we get so i did the number of iterations was 15 and we got 3.1415 and then we missed out on the 9 here right so that is indeed the fifth
+
+00:07:31
+digit uh which is where we started throwing terms away um so so if we wanted to get even more accurate uh clearly we don't need more terms uh in this condition right so we want it to be more accurate let's add it to let's instead change this to one e to the negative eight so building that we see that instead of 15 terms we needed 25 terms so we need to do 10 more steps and indeed we got more accurate in terms of our estimate of pi so that's it for this program it's very simple of course and as we learn more
+
+00:08:09
+things in c plus plus i'll start introducing more complex algorithms but this was just a fun example to show you a bunch of the things that we've learned using ins and doubles using jump statements using if statements using loops using output so there's a lot of things that may have seemed trivial on their own but putting them all together you end up getting this nice neat little estimate of pi so i hope you enjoyed and i hope you coded along with me if you liked the video feel free to like subscribe and
+
+00:08:42
+leave a comment below
+

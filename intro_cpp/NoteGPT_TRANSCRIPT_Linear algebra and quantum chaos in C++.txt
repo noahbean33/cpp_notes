@@ -1,0 +1,174 @@
+00:00:00
+welcome back uh to the channel in today's video we're going to do something uh that's long overdue I'm going to give you a quick crash course uh in doing linear algebra in C++ uh with the igen library and as a demonstration um about how to use the library to actually solve a real physics problem we are going to calculate a quantity that is extremely common to calculate in Quantum Chaos Theory so without further Ado let's begin by discussing setting up igen and actually solving problems with igen so the first
+
+00:00:35
+thing you're going to want to do of course um is download igen so you can go just Google igen C++ you can either go to their gitlab um or to their website and download um the igen sort of like source files igen is a header only Library so you don't have to do anything sort of too complicated uh to get things set up um so here you can just download it by clicking um this button uh and then let's jump into um actually running a basic program that calls en functionality you see here um I'm using
+
+00:01:09
+Windows subsystem uh for Linux um and you can see I already have um a YouTube folder set up where I have igen already downloaded so this is the version um that I'm using uh whenever you're using this you should just choose uh the latest uh stable release and you can see um this is what the inside of 's uh sort of folder looks like where most of the features are in here so you can see uh dents igen um you know things like Computing igen values uh there's there's functionality for sparse matrices and so
+
+00:01:46
+on so this is a complete linear algebra package um essentially uh that is extremely performant um but the the thing that I like the most about igen is that it's extremely um expressive so let's go into our linear algebra um demo and what I have here is I'll actually I was I was doing some tests to make sure things worked um let's actually delete uh the executable um here so we have our demo.cpp to set up a very basic program you can follow along here I've included uh the io stream so this is just so we
+
+00:02:21
+can print things out um when we test things and then uh just to get us started I'm including /d and what this is going to allow us to do is it's going to allow us to declare uh matrices uh that are dense and what that means is that um if I if I say I want to build a 10x10 Matrix um a dense Matrix will allocate memory and store values in all of the entries an alternative would be to use a sparse data structure where you only allocate memory uh to locations that have values what this basically
+
+00:02:56
+means is that we're not going to store any zeros so we have a sparse Matrix we should have a sparse uh data structure uh today we'll just talk about uh dense matrices because that's that's all we need now I've set up uh I've set up my file by saying that I'm going to use namespace STD so this is uh the St the the standard Library uh namespace and the igen namespace and all that means is that actually I don't need this STD colon colon it it just knows that I'm
+
+00:03:24
+using thei function from the standard and so this line of code I've just inserted it this allows me to read off integers um as strings from the command line uh which is of course we're going to be declaring n byn matrices um so this will just allow us to not have to recompile I can just pass new um ends uh to um the the function now of course we want to be able to compile so I've quickly made a make file uh which you can follow along and copy this so the command is demo and um its dependency is demo CPP so when we
+
+00:04:01
+update demo.cpp um the make file will know that it should recompile if we ask it to um and so I'm using the g++ uh compiler -03 uh this is just um this is just optimization level three and this is how you include igen there's fancier ways to include igen especially if you're using um cmake you can follow their instructions on their website about about how to do that but in principle all you need to do is include um the I uh like the path to the directory of igen with- I and then I've enabled two
+
+00:04:36
+other optimizations not super important but Dash March is equal to Native and mtune is equal to Native it's just turning on uh what are called vectorization features um so they can use like simed instructions and stuff like that when they're when they're doing uh the computations that you ask it to um and then I'm using the C++ standard uh 17 not super important and then I output an executable called demo so let's get uh let's get started let's say I want to um declare a
+
+00:05:04
+matrix that is I apologize I have co-pilot on so uh co-pilot has just autofilled this is not an advertisement for co-pilot but this is how you declare um this is a this is a real Matrix with random entries it'll fill it'll fill when I call this command it will fill the Matrix with random entries um and the Matrix is um n by n so let's go ahead and print out this Matrix just just so we can see uh that we've indeed done that so to understand this syntax you should see Matrix here so that's the
+
+00:05:40
+full word Matrix and then you we have oh we have a big capital x here and what the capital x means um in the igen library is that we're not specifying at compile time how big this Matrix um is so I could change this to like a two and then it's a 2 by 2 Matrix uh but we're going to keep this as an X now what d stands for is that it's a double so the Matrix is going to be filled with doubles those are 64bit uh real numbers um I could change this to a float then it's a 32-bit um uh number uh real
+
+00:06:18
+number or I could say something like CD and this is a complex double so it is a complex number where the real and imaginary part are specified by by a double now let's just do real numbers uh for now so the syntax might feel a little clunky a little ugly uh but you get used to it um I think like in actuality it's quite it's quite an elegant way to have a strong typing uh sort of way to declare uh matrices so let's let's compile this and let's output let's output our Matrix
+
+00:07:00
+and actually let's let's clear just because it's it's starting to get clunky so demo 2 so that's going to pass n will be two so it'll be a 2x2 matrix you output it like this now an important thing to note about igen uh with its uh random sort of uh declarations when you're filling you know random vectors or random matrices is that um you do get these numbers out of a random number generator but it's deterministic so these numbers will always be the same but if I was to then you know copy this
+
+00:07:34
+command and I ask for a matrix B declared in the same way what you'll find is that of course these these will not be the same Matrix so I didn't put an extra um end line here but you can see that you know this is a um and this is B and so these are not the same Matrix so the program will be deterministic um so we can do the same and and get some 3x3 um Etc uh so if I rerun this again of course I'm going to get the same uh the same matrices but of course the two matrices will be different they'll be randomly
+
+00:08:13
+generated now what's really nice about enan is that the way that these objects interact let's actually put an end line here uh the way that these objects interact is um like they are uh oh clock what is that uh like they are actually matrices so I can do exactly like a Time B for example and then I can output that and Let's do let's do that um they behave you know the the you can write basically arbitrary Expressions as long as they're valid mathematical expressions for the interaction of matri
+
+00:09:00
+uh uh with matrices basically right so you don't have to call functions that are like um you know Matrix multiply a comma B it's just a * B and the uh the library knows how to handle this this is called operator overloading uh this is something that you know uh uh that can be sort of like elegantly implemented if the if the library um if Library authors uh take the time to do it so one thing that we can do uh as well is we can just access um entries of the Matrix as if they were variables
+
+00:09:43
+themselves so we can access the memory uh directly um and make modifications so this is the z00 uh um entry and so setting it to one uh we'll see that we actually changed um The Matrix I guess what I'm trying to basically demonstrate here is that um the matrices beh like matrices right so instead of getting uh this entry uh we get we get one okay so the next thing that we need um is to sort of like understand that we can also just do uh vectors so if I write Vector XD um and that's we're
+
+00:10:19
+we're physicist let's write s um Sai uh here is now a uh column Vector with n entries in C++ what Vector XD and Matrix XD actually are is they're templated classes they're they're classes they're objects and they have member functions so this guy is not so this data type is not guaranteed to be um normalized but you can just normalize it you can say do normalize and there we go now this is a um a column Vector we could for example make another Vector let's call it S 2 and it will
+
+00:10:59
+also be uh random and let's also normalize it then what we can actually do is we can take it knows exactly what I want uh we can take the inner product there's two ways to take the inner product um you could do uh s uh dot dot like this uh S 2 or you can actually do it in the way you would express it uh mathematically so it's really up to you these are equivalent um statements so let's let's do that and you can see that uh we get the same answer right so those are two those are two different
+
+00:11:37
+things um and of course if it was if these were uh if these were complex uh numbers uh or complex vectors you could also take the adjoint you take the adjoint of a matrix getting started is very easy you can write uh Expressions just to just to show you uh for example uh s minus 0.2 time S 2 like this and the code will know um that this is in fact um you know multiplying a number into a vector that gives you a vector multiplying a number into a vector that gives you a vector and then subtracting off the vectors it
+
+00:12:19
+will just it will just process like process this like it's math right and so this is probably something that's probably not super uh fabulous to you um if you're coming from uh let's say python or like a higher level language like like matlb but this the point is is that you can use a low-level language like C++ get the speed of C++ while also interfacing with data types that make it feel as trivial as madlab that that's sort of the point um that I'm trying to make and there's lots of there's lots of
+
+00:12:51
+different things uh that you can do for example like and I can't go through all of them like this is just because of how easy uh this should probably look to you um getting started should be you know very trivial for example we could initialize s instead instead of a random uh we could we could set it to a um an all zero vector or we could set it to a constant for example the library is quite large so I might cover more um more details about what you can do or I might solve different problems that
+
+00:13:22
+expose different features uh but for now this is sort of sufficient for what I want to do um in this uh in this video now let's actually switch over to physics and let's do something useful uh with igen Okay so let's suppose that we've solved uh the equation for the energy I values of the hamiltonian so H is just some hamiltonian something from quantum mechanics and these are the energy I values here one thing that we're going to assume uh throughout this is that um if I give you EK EK will be ordered in
+
+00:14:00
+such a in such a way that it's always less than or equal to EK plus one right so if there's an equal sign that's a degeneracy um in the Spectrum we don't expect many of those um unless it's a very special uh class of model um in the Spectrum so in Quantum chaos we say a model is quantum chaotic um if it has EK it has like spectral statistics such that it looks like random Matrix Theory basically specifically if it looks like The gausian orthogonal Ensemble or the gausian uh unitary Ensemble and what I
+
+00:14:47
+mean by that is that when I take um when I take random matrices you can think of this for example as generating matrices randomly with random gausian uh coefficients um when I look at the spectral statistics or the properties of the spectrum on average of a matrix like this and I look back at my physical hamiltonian they look remarkably similar and we call this property um Quantum chaos there's a whole history to this basically it's it's founded in in the in the idea that if you take a classically
+
+00:15:24
+chaotic hamiltonian and you quantize it this is what you find basically this is what you find the typical markers of uh classical chaos don't particularly survive or play well uh with quantum mechanics because of unitarity there's a whole literature and there's lots of Concepts and questions um and directions of the way people are trying to think about these things um but this is sort of like the standard go-to definition of quantum chaos and so today what we're going to do is going to
+
+00:15:56
+diagonalize a hamiltonian we're going to cheat a little bit where we're actually just going to we're going to we're going to generate um one example of a um of sort of like a gausian filled uh Matrix and then we're going to calculate um a quantity that you would often find um in physics okay so what are what are we going to calculate the thing that we're going to calculate is first we need to introduce the gaps okay so SJ is a gap and the Gap is defined like this and due to our definition we know that
+
+00:16:35
+this is greater than or equal to zero now we're not going to calculate the statistics on SJ because there's a slightly better um there's a slightly better quantity um to choose and that is uh the ratio uh statistics or the ratio quantity um of the gaps and so the ratio this is called the ratio test is calculating all of the all of these values so on top you put the minimum of SJ uh SJ + one and on the bottom you put uh the maximum of SJ SJ + one and you can see right away that this is in sort of uh the
+
+00:17:30
+uh the all all of the ratios will be on the interval 0 to one a a a a very standard thing to do with these numbers is then to compute their average and random Matrix Theory makes a very concrete prediction about what this average is and it helps us distinguish Quantum chaotic models from non-quantum chaotic model so I'm going to quickly jump over to my recent paper that use this technique and so you can see see RJ here is exactly as I uh defined it uh to you and if you use a Gauss orthogonal um
+
+00:18:07
+Ensemble and you do the analytics for 3x3 matrices you see that the actual distribution of ratios um is given by equation 12 and if it's instead sort of like a Pon uh type model an integral type model instead you would find uh this ratio uh distribution we're not going to calculate the distributions we're going to calculate the averages which uh which we State here in the text and so basically um if the model is quantum chaotic what we should find is good agreement with this number so the
+
+00:18:40
+average of the ratios should be 4 - 2 * the < TK of 3 which is approximately um this number in decimal form so this we're we're going to try and do this now now that we have our sort of physical context and motivation let's now write a function to generate um a matrix now we can't actually rely on 's random uh generator here and that's because these entries um are uniform and the gaussian Matrix uh so we uh we want uh gausian entries with zero mean and unit variance all right so that's very that's
+
+00:19:26
+very specific and of course we want a herian matrix so it looks like a hamiltonian right so that's what we're comparing uh and because specifically it's a real yeah co-pilot uh uh co-pilot guess because it's a uh because it's a real matrix it's going to be a real symmetric uh Matrix okay so let's let's get on that and we'll we'll create a function uh that returns uh that type of uh Matrix so we're going to return a matrix XD and um did it just do it is that right right so we're going to
+
+00:20:17
+return a uh a matrix XD uh that is n byn okay so this is that should be like that so it's going to be an N byn uh Z Matrix and this is exactly how I would have done it so yeah we want a normal distribution that spits out doubles um that that has this is where the mean goes and this is where the variance or the standard deviate it doesn't matter if it's one um and then okay so then we're going to Loop over the Matrix and fill it with um with random with random entries okay so if we call this
+
+00:20:57
+function uh yeah we're going to do that uh but we're actually going to call uh the the hamiltonian uh like that specifically so we're going to add a to its transpose and that should give us a herian or a real um symmetric Matrix now I'm going to add uh I'm going to add two headers um specifically we're going to add uh random here so that this works and the next thing that we're going to add is igen um igen values so that we can actually solve the hamiltonian for its Spectrum so the way
+
+00:21:33
+uh the way that we'll do this is wow it already it's just telling me um the way wow okay so I don't know if this is helpful the fact that I'm letting I'm letting copilot actually do this code for me so basically we're going to call the self adjoint igen solver and the way this method Works um is you have to tell it here so this is this is uh this is templated so it's an it's a it's an i solver uh that can basically do the problem but you have to tell it which
+
+00:22:04
+data type it's doing it to so I could for example do uh floats here or I could do uh complex doubles or I could do complex floats right um so we're we're doing Matrix XD because that is the um the Matrix that we're working with um and right here uh this is it will it will compute the igen values and right now with the way it's written it will also um it will also compute uh the igen vectors so we want um igen values only and there's a reason for this one uh I vectors are a lot of
+
+00:22:41
+memory so you should you should always be Memory cautious um and I values only is faster basically so if I uh if I only want if I only need uh the energy I values then it's always best to only compute um igen values so why don't we do this uh quickly and let's uh let's print out so to get the igen values you do exactly what you don't even need me just just let let co-pilot write the code for you um uh let's let's print out these these igen values um and let's compile let's
+
+00:23:21
+make sure we didn't do anything wrong now this right I guess it would be a co-pilot doing things that are wrong uh okay let's do 4x4 right okay so uh an interesting thing to note here is that igen will return to you igen values that are um that are ordered and the way that we wrote this is it's not deterministic right so every single time we give the random number generator a new seed because this is what this random uh device is okay so now that we have the igen values we want to compute um the
+
+00:24:02
+ratio right and to do that let's let's make a function so we're going to uh compute ratio between two numbers double a double b and I'm going to be a little bit lazy here and I'm not going to look at H cases uh so I think what copilot is doing here is that like I wrote like I went through um the uh the example previously uh just to make sure like everything sort of worked out and basically I'm not going to handle any um edge cases I'm just going to say okay so if a is greater than b um then we know
+
+00:24:39
+that our condition says b divided by a for the ratios this is how we defined it and if not if B is actually greater than a we're just going to return this and I guess this else will handle like sort of all other cases so the less than or equal will also uh return this now the thing is is that this is uh this is lazy uh uh but it's a demo true basically uh we should we should be suspicious of very small numbers um here that are essentially zero but they're nonzero because of numerical Precision
+
+00:25:14
+um issues or little things like that so we could end up getting some weird result uh because uh we're not actually Computing things uh well here the next thing that we're going to do is we're going to calculate um the gaps okay so what I'm going to do here is I'm also going to be um what does it say anyways so we're going to uh we're going to uh output a vector XD um of all of the gaps so what we know is that there will be one less Gap than there are igen values and we're going to pass
+
+00:25:51
+the igen values uh to the vector or sorry to the function in this way specifically so I say const because we're not going to change I this allows uh optimizations to be done and I'm going to pass uh with an and here which is pass by reference so there's no copying I'm not copying this data um into this function I'm giving this function direct access to the memory but I'm also saying but you're not allowed to change it basically that that's that's all this is doing um and so this is good practice
+
+00:26:22
+you should never uh if you can avoid copying you should always avoid copying copy copying data unless it's small data like a single double or something like that that's always super um inefficient so the dimension um uh or the number of igen values that we have is. size so this tells you how big the vector XD is very useful and we're going to calculate um all of the gaps we just quickly Loop through them with a for Loop um and you know we're just going to fill uh the entries here I M +1 minus I uh M right
+
+00:26:58
+and then we return gaps and so when I call this it will it will it will return to me a vector XT finally what we're going to do um is we are going to calculate um the average of the ratio right so the first thing I'm I'm going to do is I'm going to calculate all of the gaps I'm going to pass uh the igen values in the exact same way and uh just just just cuz we're up here I'm going to return a double cuz I'm only I I'm returning uh the expectation value of R basically uh sure um and uh so here the
+
+00:27:37
+first thing we do is we're going to calculate um all of the gaps and then again the number of ratios is one minus the total number of gaps and that's because each ratio has two uh of these neighbors um inside the expression so this time we're actually going to do a sum um and we know that the number of ratios so if we're going to comp compute the average then we're going to weight that sum by 1.0 divide by num ratios this 1.0 is just there to avoid this thinking that this is integer um
+
+00:28:13
+arithmetic integer division right and so basically we're just going to um go through and we're going to compute the ratio um of all of the gaps basically and then we're going to return the sum so let's comment this out this basically solves our problem though right so um I'm I'm going to set the Precision um uh to eight for C out uh that's basically because I have I have that many digits here um and so this is the theory this is the expected value um and uh we're
+
+00:28:44
+going to calculate what our average ratio um is for one realization of the hamiltonian now I want you to sort of like think about that for a second um when I told you uh that's what the goe statistic is you should have noticed that there's like this the interesting thing here is like that's averaged over many uh Matrix realizations um but these problems have something uh that's called typicality and typicality uh basically says that for this measure it's not just that on average these matrices will have
+
+00:29:22
+this property it's also that if you pick out one Matrix it will also with high probability have this property already on its own so the distribution um is very tight um and sharp and not all things have this property so for example if you do the spectral form factor calculations those don't have a property that's called like self averaging you do have to perform averages and um like all these things different realizations and averaging over different realizations to get the you know the predictions of
+
+00:29:51
+random Matrix Theory uh but this specific example actually doesn't have that property which is quite interesting okay so this this should give us something that's like relatively close uh to to Theory especially as we increase um n here actually haven't tested this but this is this is my expectation demo and Let's do let's do 10 okay so that's very different uh but the model size is not that big so let's do 100 okay we're getting closer let's do 500 okay very very
+
+00:30:26
+close let's do 800 okay kind of slipped away if we do it again okay so it's close so maybe for smaller sizes you need a a little bit more um abro Jing if we don't get good agreement uh then okay there there you go so now we have two digits of precision for for 1,200 uh let's go let's go up to 2,000 we're we're almost we I I I would call that a little bit of a little bit of convergence Let's do let's do 4,000 which will be a little slow die realizing a matrix um is
+
+00:31:00
+computationally complex it's it's sort of n to the three yeah so we're a little we're a little farther away maybe we do need a little bit more um averaging so if we do it again farther away okay so let's I don't know let's let's like briefly move on do something that will take a little bit of time let's do 8,000 okay so we got this answer back it's not particularly better so I think what we'll do is We'll add a little bit of averaging like in in principle yeah so let's let's add a
+
+00:31:43
+little bit of averaging um to see if we can get a little bit of better agreement with this so it's not as typical as I sort of expected it's not as typical as I expected but it shouldn't be too hard uh to get agreement so let's uh let's do something like um okay so yeah so theory is there and what we're going to do is we're going to say the average is equal to zero and then we're going to do in samples and let's let's just do 100 um so 4 in m is equal to zero m is less than
+
+00:32:24
+samples m++ what we'll do is we will we will generate these on the fly so in each iteration we'll get a new Matrix and we will solve that Matrix also on the Fly of course and then um the average will be plus equals 1.0 / by samples uh times yes the average um like that and then at the end we'll change this to average here and actually let's just let's let's make samples something that we can pass to the yeah do the second entry like that so we have to pass how big we want the Matrix and how many
+
+00:33:27
+samples we want okay so so clearing let's do demo and we'll do 1,000 by 1,00 matrices and let's let's quickly warm up with a 100 samples so that's Theory let's hope this doesn't take too long okay so that looks pretty good I mean if I made it smaller and then I just did like 1,000 samples so certainly isn't as typical as I expected maybe there's something wrong with the way I'm generating The Matrix um let's do something smaller and let's see if like increasing the samples by a
+
+00:34:21
+lot helps this is really surprising because when you have a physical hamiltonian you get agreement quite quickly so for example if you look at our if you look at our article so we're not averaging over anything so this is this is our physical hamiltonian and its spectral statistics we're not averaging over anything and we're getting like pretty close agreement I guess it's not like overly it it is kind of it's I think we're we're closer with a single shot of the random matrix
+
+00:35:01
+model but uh so L is equal to 24 is a very big uh very big Spectrum um okay so we're we're getting we're getting about here Let's do let's do 2,000 and we'll do 50 does that is it is it the system size maybe if we get three digits I'm Ting the video that's that's enough for me okay so we we're all we're almost in agreement um there's probably issues and some interplay between how big the system is and how many samples uh we get um and so I'm basically going to leave it here just
+
+00:35:43
+because it's not uh it's not Uber important uh that we get the exact uh right answer uh the typicality I mean this is interesting that you only need 10 samples to get close to the uh to get close to the average for sufficiently large um uh system sizes uh you know your prediction is a little bit worse for smaller uh matrices um and even more um samples but I'm going to leave it here if you made it this far uh I hope you enjoyed uh this format um and I hope you got some value um out of the video so
+
+00:36:19
+I'll see you in the next uh video in the next time so don't forget to like subscribe and leave a comment below
+

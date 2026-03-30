@@ -1,0 +1,120 @@
+00:00:00
+welcome back uh to the channel my name is Jonathan Rell and today what we're going to do is we're going to talk about how to write code in parallel in C++ so this is something that might seem uh a little bit uh intimidating but as it turns out getting certain programs about 90 to even 100% of the way uh to fully uh utilizing your CPU um it's actually quite easy in this video I'm going to show you uh a quick crash course on how to write parallel programs uh in C++ specifically I'm going to show you how
+
+00:00:34
+to use the other cores on your CPU this is actually surprisingly easy to get started uh so it's definitely something you shouldn't be intimidated by but before we jump into this I recommend everyone to go check out uh my Discord channel it's a growing community of researchers and students uh the community is focused on scientific Computing and uh Canin matter physics or statistical mechanics and it it's turning into you know sort of quite a good resource to have uh discussions on
+
+00:01:03
+things that are important to people in these spaces that in mind let's actually jump into the code and show you how easy this is all right so I have my multi-processing uh folder set up and inside of it I have my make file and demo.cpp um and let's quickly look at the make file it's going to be slightly different than the last make file um I'm still including uh enan if you watch that video this part isn't uh important for this demonstration ation but it's just sort of something I always copy and
+
+00:01:32
+paste the thing that's important though that's different is I'm going to um also pass the flag dasf openmp okay the uh the library that we're using is called open multiprocessing it should come out of the box uh with whatever compiler um you have so it should be easy to follow um this demonstration so if you go into a standard umcpp file you know I have have my main I'm allowing myself to pass numbers we'll comment this out but eventually we'll use it for the demonstration um in the future let me
+
+00:02:09
+delete this using namespace I again um and for the demonstration we're going to need IO stream so we can uh print things to console um and then for open NP we include uh o.h and I'm going to be using some of the math functions so I'm going to include math.h now here I am basically just uh I'm defining um pi as um The Arc Co of1 um this is just so that we have it you can also uh from math you can use uh mcore Pi but you know old old habits uh so it's it's not important which one you
+
+00:02:48
+use so to initiate a parallel region what you do is you will do # pragma these are pragma directives uh om P parallel and now what happens is with the current way that uh we're writing this um open and P will spawn basically the maximal number of threads by default um to run inside this scope so inside these curly braces you now have a parallel region where a bunch of different threads um are running so a quick way to see that we have a parallel region uh with a number of different threads uh running is to actually just
+
+00:03:30
+print out their um their thread ID and this is how you do that if you want to know um which thread you're sort of talking to in the program you say om getor thread uncore num um and here I'm going to create a um end line uh like this so doing that if I make demo now let me increase this so you can see um you can see that you know all of my all of my threads are printing out um their thread ID number so I want you to take a few things away from this first which thread gets to the print statement
+
+00:04:16
+first is not deterministic right it's sort of you know threads are doing different things um and so this is not something you can actually uh predict right so this is the sort of Master thread or the main thread um but but you can see uh you know nine gets there first and then 10 uh and then six now another thing interesting happened here um for this last run and this is what's called a race condition and basically what happened is when thread when thread five got to the print its thread
+
+00:04:50
+number that was around the same time that the instruction for print 7 uh got there and this was done so fast and so like in line with each other that actually actually these L these this was executed by five and seven before the end line was able to be executed and this is what's called a race condition this is behavior that we probably don't want uh we want this to be we want this whole line to be executed or at least I do just so that the print out is sort of uh so that the print out looks nice we want this to be
+
+00:05:26
+executed in a way that we expect and so we expect that this whole line is executed Ed um all at once and by default we don't get that behavior um so to fix that what we can do is we can introduce a region that we call a om critical region like this so let's cut this put it in there and when I make demo uh output demo now you can see that it will always come out nicely and what critical is basically doing is it's basically saying only one thread can enter this region at a time so it'll
+
+00:06:09
+start a Q and it'll say once okay so once thread one um is finished with this command and it exits this scope okay now the next thread can come in basically there are other control structures um like this so for example uh you can do um single which is basically telling uh the code that you only need a single uh print out basically so it'll basically pick the first thread uh to get to this line um and that will print out um its thread ID right so that's three that's four that's eight that's zero right now by
+
+00:06:46
+the way the way that you can control how many threads because you might not want all of your threads uh dedicated uh uh to your program um is to do this so for for example if I set it to one it'll always be um zero if I set it to two uh maybe this is a bad example cuz I have a single on you might just yeah we might still get zero but you can see that uh let's let's quickly let's quickly change this back to critical um so all the all of the threads get print uh printed out right so if you see two you get 0
+
+00:07:24
+one 0 1 um and then of course I can I can go higher so let's get six and we get Z through five printed out um so that's that's uh that's pretty great right now something that you need to know is that this open andp has a framework that basically has shared and private memory between threads Now sort of and a way to think about this implicitly is that if I declare a v variable out here this variable um is shared in the way this current program is set up and what I mean by shared is that all of
+
+00:08:03
+the threads can see this memory address so they can all modify X they don't have a private copy of X they can all see and update X now if I was to write int Y in here this is private okay and basically what that means is that if I have thread zero and thread one each of them has their own unique copy of int Y and they can't see each other's y so for example we could say int X um is equal to uh om get num thread right so now it stores the thread ID let's get rid of this for a while um and
+
+00:08:43
+instead of that we can do um X here now this doesn't now this doesn't actually uh make sense what we actually want to do is something that looks like this um and now X is private and it has the thread count or and it has the thread ID that you want um uh to be printed out and of course it works uh just like before now what if what if though I wanted for for example for bookkeeping reasons um to do something like this now this by default is shared and we don't want that because basically
+
+00:09:22
+what that will do actually let's let's let's just let's just do this just to see what it does right so basically what happened um is that 10 was the last thread to be called um to assign to X or not not the last one I guess I guess three was perhaps the last one or who knows how this was actually executed but basically a bunch of these print commands happened when X was assigned um to 10 right but if I do in fact if I'm insistent that X is declared out here I can actually just
+
+00:09:58
+tell the code um that it's private right and then now X will be private to all of the threads does that make sense hopefully that makes sense but basically you with open and P you always have to be aware of whether or not a variable is shared or private and by the way you can do as many as you want um here so I could do XY there are there are more um declarations here I'm not going to have an exhaustive crash course of open and P there's more advanced things that you you can do but this is basically uh the
+
+00:10:32
+gist of it and if you want to explicitly tell me uh or tell the program what's shared uh you can also do that so let's let's actually do this do this and do this one other uh directive that is sometimes useful the uh the pragma OMP master um directive and what this will do is it always picks out uh the zero thread so if you always want a specific thread to exe execute certain commands uh this is the way um to do it and so this is in contrast uh just to summarize right so we have we have the OMP parallel this
+
+00:11:10
+starts our parallel region and then we have um critical so that's one thread at a time uh then you have single uh sort of first thread to arrive does task and then you have Master which basically takes zero thread and does whatever task uh you want um to actually do all right so this isn't really the power of threading though the power of threading is basically doing for Loops very fast or it's doing independent tasks uh very very fast uh but before we get to for Loops I just want to say one thing to
+
+00:11:49
+note is that these pragmas are basically ignored um if you're only running with one thread or if you're not compiling with open and P so it's sort of harmless to extend your code uh with openmp it's not bad practice even if you sometimes only want to run um in serial for for some reason okay so now that we have sort of the gist of you know these are the threads this is the the memory layout which is which is a very crash Coursey I did not go into as much detail you should definitely look up documentation
+
+00:12:20
+um if you have questions or of course you know come to the Discord um and chat let's actually solve a problem where we need a for Loop now the problem that I'm going to solve is a quick um integration problem we are going to basically solve the problem of integrating from 0 to One S of pix and we'll do it naively with and we know the answer to this by the way so that's 2 over Pi um and I'll I'll bring the pi over here right um so that so so that our answer should be two at the end that's
+
+00:13:02
+why I have the the the pi prepared in the program okay so what we're going to do is we're going to do a remon sum and we'll do n total points right um so we're going to do a sum let's call this number uh s and so the S will be 1 over n points um times the sum of s uh pi over n uh basically times an index so let's call it m to n minus one M right and so when we compute this uh we'll get out uh the number uh 2 over pi and then we'll multiply it by pi so let me just
+
+00:13:54
+put a pi here um and we'll get the number two so this is the math problem that we'll quickly solve it's very naive but at least we can scale it quite easily to show the power of multi-threading and we'll also show you know some of the like some of the drawback some of the things that you need to be aware of because throwing more threads at a problem doesn't always uh make the problem faster there is overhead um to spawning threads and to using threads okay so let's let's uh
+
+00:14:22
+allow us to input the integer um n which will tell us how many sort of how fine grained our reman sum um actually is going to be and let's call uh double sum is equal to Zer and let's start our um our parallel region to do a for Loop um it's very simple you do # pragma om4 and oops so then you do four just like you would do a normal one um 4 in m is equal to Z and we're going to go up to n as our formula uh demands or n minus one um as this does and m++ and basically it's quite simple um
+
+00:15:19
+some we'll just do it in a way right now where we'll just uh we'll just do the sign terms right so we have um M * pi or let's do it in in a nicer way pi times um I'm going to cast M to a uh double just so it doesn't get confused and do integer division um um here and basically what we'll do just to start us out is we'll do the answer uh we'll print out sum we'll multiply Pi time sum / n right and so that should give us two if n is sufficiently large and let's uh let's
+
+00:16:04
+end line here so the first thing that I want to do is I want to run and let's do it for a 100 okay so we can see actually I don't like how much Precision there is let's change the let's quickly change the Precision uh Let's do let's do 15 of the print out demo and we'll run it in serial again okay so that's our accuracy and also the code is is very quick but we can go to 1,000 okay we're still not perfectly um accurate and we'll go to uh 10,000 okay we're getting more and more
+
+00:16:52
+accurate so maybe this isn't uh you know as a in terms of a research project this probably isn't the best use of resources uh but okay so now now the program is actually taking um a little while to compute um and we're basic we're basically there right like I mean like this is basically numerical Precision but let's do just a little bit more so the program actually takes time okay we didn't get any more accurate in fact this is probably uh numerical error sort of rounding up but at least we're
+
+00:17:21
+doing a task uh that takes time now now if you're watching this and you've uh and youve been sort of uh sort of grasping what I'm saying what do you think is going to happen now when I actually turn on uh multiple threads quickly thinking about what's going to be happening uh to the term sum here so let's let's make this smaller and let's turn on Two And you see right away that now the now the answer is wrong and what's happening is that multiple uh multiple threads are trying
+
+00:17:59
+to perform this operation at the same time now one way to fix this would be to I well so there's two there's let let's call them uh three different ways that you could fix this the first way uh that you could do for example would be to have a global sum that's shared and then [Music] introduce a local one and actually only sum up the local ones so that they're local to the thread and then later once the problem is done you could add them all up to the to the global shared one right okay we're not
+
+00:18:36
+going to do that um because there's a there's basically a like there's a fancier or sort of more elegant way to do that a really bad way to actually solve this problem would be to um introduce a pragma om critical here and the reason for that is that this is where all of our work is and so if we're making our threads wait to do this work you're going to get incredibly slow code basically you're not going to have any speed up uh compared to serial so we're not going to do this
+
+00:19:06
+either now the really nice thing about open and P is that when you're doing for Loops there's a way to do what they call reductions basically what this reduction uh Clause uh is going to say we're going to be taking sum sum is a is currently a shared variable but basically what this is going to do is it's going to say to each thread we're going to give we're going to give more of a local um sum it's going to do this for us automatically and at the very end we're going to elegantly add them all up so
+
+00:19:35
+that we get the right answer so this basically takes care of splitting the memory privately in the way that you that we should have uh amongst the threads and then adding up um to the global memory so let's do this and we can do that and you can see that we're back to actually Computing um the right number now that we have this example let's now start talking about um scaling and how much this actually improves your life so algorithms can be what are called embarrassingly parallel so this is
+
+00:20:15
+embarrassingly parallel in the sense that none of the threads actually have to talk to each other until the very end of the calculation when you when you uh actually do the reduction and sum up all of the local sums of course uh as you're probably thinking there's plenty of examples where it's not that trivial uh but for embarrassingly parallel tasks the theoretical maximum speed up would be um sort of dividing out the total serial time by the total number of threads that your program um is using
+
+00:20:46
+now that's a theoretical speed up and it's not true in practice because there is overhead and spawning threads and to see that we're basically going to track how fast our program is right so we're going to get uh the wall time which is basically this will give us uh some quantity um in seconds uh from the CPU um and that's actually sort of uh sort of arbitrary we'll also get the end uh with this same function from open and P and so their difference will tell us um the time it took in seconds for the task
+
+00:21:21
+um to be finished this is starting to get a little cluttered so let's do make demo now okay and let's do pcore numor threads is equal to one/ demo and let's give ourselves a big number so that it actually takes time to compute um the quantity so now that we have um this what we can do is this number should be about twice as fast and it's not quite there right so twice as fast would have been 45 but you can see that perhaps due to the triviality of this problem um this is not uh you know six times slower um than
+
+00:22:06
+this right and basically what we're seeing is diminishing returns um to more and more threads these are my physical cores by the way so I think if I go to seven oh it's still getting faster actually let's go to eight nine soz I have 12 total threads 10 let's just jump straight to 12 okay so you see that 10 is actually slower um than 12 what did 11 do also this isn't like super yeah this isn't super rigorous by the way because I mean these are these are almost surely not uh not good uh these will always
+
+00:22:50
+change and you should really you should really uh average over these types of things like this is almost like empirical like you need to sample this observation but basically the the idea that I'm trying to convey to you um is that there will be diminishing returns especially if your problem um has sort of like a triviality to it if the calculations you're doing in the threads um are too small and that's certainly what we're doing here so if you want to keep the embarrassingly parallel um speed up the
+
+00:23:18
+thing that you do inside the loop has to be complex uh otherwise um you know overhead will eventually um eventually take away uh your return or the total number of things in your for Loop needs to be bigger so that's basically all I wanted uh to to to tell you this was a quick crash course in open and P and hopefully now you're at a point where um you can start experimenting uh yourself this is a huge speed up to productivity if you're writing scientific uh software um or you're trying to solve problems with
+
+00:23:52
+scientific uh Computing and you have to write your own functions and there's certainly more to be learned um about openm P for example something that I didn't cover um is that you can actually customize the schedule um of the for Loop and how tasks are distributed amongst the threads but that's certainly a topic for another time I wanted to keep this as self-contained and minimal um as possible so if you haven't already uh please hit the like button um and certainly feel free to leave a comment
+
+00:24:20
+below um thanks for watching and I'll see you next time
+

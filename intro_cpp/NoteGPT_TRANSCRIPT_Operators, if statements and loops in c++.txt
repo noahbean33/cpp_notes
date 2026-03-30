@@ -1,0 +1,93 @@
+00:00:00
+so now that we know enough basics to run a program do some math print out results to console let's start talking about doing some more complex computations to do this it's convenient to talk about operators this can range from increments in the integers uh compound and assignments and comparisons like less than or greater than this will help us run programs where we might need to check conditions uh that tell us how to do a computation and so on so in this video we are going to talk about assignments first and then we'll
+
+00:00:37
+jump into loops and conditional statements uh that will allow us to do much more complex computational tasks so assignment is essentially assigning a value to a variable so if we declare some integer a an assignment operator would be the equal sign setting it equal to say five we also saw arithmetic operators for addition subtraction multiplication and division one that we left out was the modulo so for example we could print out the value of 15 modulo this percent sign is modulo and c plus plus modulo 4.
+
+00:01:23
+and if we were to compile this and run it we would see that 15 modulo 4 is equal to 3. we can also do compound assignments these can be useful to shorten code so for example uh we could take another integer b let's say and assign it the value of 5 as well um and then we could write something like b is uh plus equals to a so what we just did here is equivalent to saying b is equal to b plus a but this just shortens the code into a much more compact form and it just looks nicer you can do this with any
+
+00:02:10
+arithmetic operator so for example we could also write b is equal to uh times equals to a and what that would be is it's b times a like so so you can do that with any arithmetic operator so something that you'll see when we introduce loops is increments either a positive increment or a negative increment uh the positive in increment operator is seen as plus plus so if we set a is equal to 2 here we could for example just write plus plus a here and see what happens so what this will do is it will increase
+
+00:02:50
+the value of a by one so it's currently two and when we print out what happens after plus plus a we see that it became three if instead we also uh we also put b is equal to plus plus a what will happen is the code will increment a uh by one and then assign the value of the resulting of this expression so that'll be three so a plus 1 it'll assign that new value to b so let's print out both a and we'll print out b together and we see that a which comes out first is three and b
+
+00:03:40
+which comes out second is also three now what's interesting about the incremental operators is that we can actually just switch the side so i could put b is equal to a plus plus now what's going to happen here is b is going to be assigned the value of a and then the plus plus will increment a so let's let's see that in action so compiling running you see that a a itself was incremented to three from two but b was assigned its previous value of two so it wasn't incremented so
+
+00:04:22
+that's just a a little weird thing about uh these operators so with that we can move on to some more fun stuff uh often you'll want to check the truth value of something before proceeding in a program so a data type that we can use in c plus plus is a boolean so you can declare something like that we can call it x bool x is equal to true we could also declare it as false so interestingly something that we should pay attention to is that when we print this to the console so what would x be if i declare it as
+
+00:04:59
+false instead of printing out false it prints out 0. so this is binary false will always come out as 0 and then if we typed true what will happen is it will come out as 1. so 0 is false and 1 is true so we can now test a whole bunch of things in this context and print out the truth value so for for example we could check equality we could check to see if a is equal to b and the way we would do that is we would ask is a equals equals b so instead of equals being the assignment operator having two
+
+00:05:41
+equals there is actually asking whether or not something is actually equal uh to the other thing so we know the value of this we of course know that a is equal to five and b is equal to 5. so printing out this we would expect the output to be 1. so compiling and running we see the output is 1 so in fact it is true we can also do things like for example is a greater than b we know that that's wrong um so compiling we should get a zero when we run and we see that in fact it is zero so confirmed 5 is not greater
+
+00:06:21
+than 5. we can ask is it not equals to b and in fact that is false because it is equal to b so all of these things work like the regular sort of truth table type things that you would see uh in a math course or a logic course we can also combine logical statements with the logical and and the logical or so for example let's write c is equal to nth c is equal to seven and then we can ask something along the lines of is a equal to b and is a less than c so this is a logical and so it will only
+
+00:07:06
+give us a true for our variable x if both a is equal to b and a less than c is true so both of the statements need to be true for this to return true so printing it out this was evaluated to true and for example if we switch this to a is greater than c which we know is false we could output this and we get zero we can only also use the logical or here and we see that this is in fact true because a is equal to b uh and this is false a is greater than c uh is not true because c is seven and a is five uh but the logical or only needs
+
+00:07:55
+one of the conditions to be true so if we now run this instead of the logical and we come out and we see the value of one so this is true okay so that was a really quick crash course uh but hopefully everything i said was clear i encourage you to sit down uh potentially pause the video here uh and play around with everything i just talked about so let's put some of this stuff into action uh with if statements and loops oftentimes we only want something to happen if a certain condition is met
+
+00:08:28
+so as you may have seen in another programming language we use if statements for this the way we do that in c plus plus is we write if in brackets we write some test so maybe rewrite the test a equals equals b and then we write a curly bracket region and inside the curly bracket region if the a is equals uh to b conditional is met so we get a true value inside this test the code inside of this curly curly bracket region uh will execute so we could for example write a is equal to b as our output if this is indeed
+
+00:09:14
+correct and let's delete this here so um so we know that a is equal to five and b is equal to five so this condition will be true and this code will run uh so let's compile it here and run it and it is in fact true a is equal to b so if we then changed uh b to 6 as you might imagine running that the code does not output so oftentimes you also have other conditions uh that might tell you uh what you might want to do so a is equal to b that's not uh you know the whole sort of like the whole universe
+
+00:10:04
+of possibilities so we could also have another condition like let's say we also have the condition um is a greater than b and we do the same thing we put we put a curly bracket region and let's just copy this here and instead we could put out the output a is greater than b now we could make as many else if statements as we want that could go on forever but we could also put the last case so a is equal to b a is greater than b so what's left that is a is less than b so we could put another else if
+
+00:10:46
+statement or we could just put else so that's just everything else if if a is equal to b is not satisfied okay we don't do that code the next thing we check is else if and if that's not satisfied we just go to l so every other possible case we will do else and here we know that the remaining case is a is less than so what will happen uh so a is actually less than b uh currently so if we run that we get the result uh a is less than b now note what happened here right so if i do something like
+
+00:11:39
+um a is equal to 7 the code that will trigger is this one and the code won't bother checking any additional statements so if the if statement is true it will not bother checking if any of the else if statements are true so just another side note i hope you're coding along with me here typing out yourself changing things around that will be the easiest way for you to build intuition and get started on your own writing code that you want to write okay so let's get rid of this code here and let's move on
+
+00:12:15
+to loops so loops allow you to do repeated statements basically until some condition is met in my opinion the easiest and largely the most useful loop is called the for loop so let's say i want to print out the first 10 integers well of course i could just write out c out for every single one of them or i could use a for loop so 4 so the syntax is the following so i write 4 into m and i will start m as equal to 1. so notice this is a declaration i just made a new variable called m and then i put a semicolon and then i
+
+00:12:50
+want to go up to the first first 10 so i could say we want to go until m is less than or equal to 10 and then i want to increment by one so i'll use our new fancy m plus plus here we could also just use m plus is equal to one but we just want to increment by one because we want we want all of the uh integers from one to ten and then what we'll do is we will just print out each one so doing that we see that it printed out 1 through 10. we could for example also just do increments of 2. so if we did increments of 2 or or
+
+00:13:44
+anything else what happens if we just do two well you see that it goes up by two one three five seven nine so the way this code is working is that the first loop it will go through or the first step we'll go through is we'll assign m is equal to one it'll do the code once it gets down to the end of the for loop it'll go up and it will use the rule to increment m and then it will test to see if m has has uh reached this and made this uh false so we'll see one it goes down it prints one
+
+00:14:21
+and then increments by two you get three and clearly three is still less than ten and it keeps doing this all the way until you get to nine now when it prints nine it increments by two and you get the value eleven and then clearly m is now greater than ten so it ends the loop so now let's accomplish this with another loop there are more than just these two loops but these are the two loops that i use uh primarily you can definitely look up online if you want to explore the other ones but while
+
+00:14:50
+i write code for this series uh these these are the only two that we're going to use so the next loop is called the while loop the while loop is a little simpler so i'm just going to write into m and declare it outside of the loop and the while loop just takes a single condition so the condition that we'll take again is m is less than or equal to 10 and the while loop also has this curly bracket region um so going from here we could do the exact same thing so m is equal to zero and let's just print out zero through ten
+
+00:15:29
+again uh well i guess we'll be including zero this time so if we do this i guess it's a little bit more transparent what the while loop is doing here so we declare m is equal to zero and then we print out m but we now have to manually change it for ourselves or declare it inside of the loop so we could write m plus is equal to one here and then it'll basically do not be and then it will do exactly what the for loop did uh we just had to throw in the declaration uh and the increment in
+
+00:16:03
+manually ourselves rather than being part of the loop declaration here we'll see m starts at zero uh and then so it it asks is m less than or equal to ten the answer is obviously yes um and then it just goes through uh and does all of this stuff up until m is equal to 10. so this is all pretty straightforward i think uh the while loop is really useful for situations where you might not know how to structure the loop as a for loop per se um so in those instances uh i use the while loop and we'll definitely get into
+
+00:16:39
+examples where the while loop will have advantages over the for loop and the four loop will have advantages over the while loop but they're largely uh generally both applicable in every situation so in this series once we start coding examples up we are going to want to do as little work as possible to compute the quantity we are interested in so sometimes we might want to write a loop and we might have a condition that if it's met we want to end the loop early or we might have a condition that makes
+
+00:17:11
+us want to skip a specific iteration of that loop so to do this there are things called jump statements so let's make an if statement that triggers if m is equal to 5. so inside this we're going to test the two types of jump statements the first one is going to be break now the break statement is going to just end the loop completely so normally if this wasn't here we saw that it would just print from 0 to 10. now the break statement is going to end this when we see that m is equal to 5.
+
+00:17:56
+so if that happens we won't print out m is equal to five right so running this we see that the break statement ended the while loop uh so once m was equal to five this was triggered and we didn't print out five so break is really useful for circumstances where once a certain condition is met no more work needs to be done anything after that would be a waste of resources and a waste of time so now let's move on to the continue statement sometimes you'll be in a situation where there are
+
+00:18:29
+just certain situations where you just don't want to collect data it would just be a waste of time to spend resources and time computing whatever m is equal to 5 corresponds to so for that we can use the continued jump statement so when we write continue here what it will do is it will just end the it will end the current iteration of the loop so it will send the code the code won't go past this point it will send the code back up to the top so right here we have a problem in our code because if we skip m is plus is
+
+00:19:06
+equal to one then what will happen here is this will then send us back to the top and then go back down and it will trigger m is equal to 5 again and we'll create an infinite loop so we actually want to uh increment our m before so running that then what we'll see is that the code will just skip we'll delete that the code will just skip m is equal to five and it'll print out every other statement and of course we're going to miss the m is equal to zero here but that's that's
+
+00:19:44
+okay that can be that can be changed in other ways but it's not useful for the example so what we'll see here then is that we go m is equal to zero we add one to it so it's one this is not triggered so we print m now we go through one two three four and then we're missing five because as soon as m was equal to five we said okay we don't need what happens after that just go back to the top and then we increased to one and we got six so as we get deeper into this series it will
+
+00:20:14
+become more and more important to think about using things like jump statements or any other method we can think of to cut down on the number of computational steps taken coding larger algorithms can sometimes be an optimization problem of memory commitments and the total amount of time or operations uh that needs that need to be taken to actually execute the code uh but that's it for today uh stay tuned for the next video where we will put these ideas to the test and we will calculate pi
+
